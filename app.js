@@ -31,10 +31,10 @@ app.use(express.json());
 
 
 
-app.use((req, res, next) => {
-  console.log("User:", req.user); // Accessing req.user in middleware
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log("User:", req.user); // Accessing req.user in middleware
+//   next();
+// });
 
 
 

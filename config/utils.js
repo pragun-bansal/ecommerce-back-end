@@ -83,6 +83,7 @@ function issueJWT(user) {
 const verifyToken = async (req, res, next) => {
   console.log(req.body)
     const authToken = JSON.parse(req.body.token);
+    console.log(authToken)
     console.log(req.body);
     // authToken = JSON.parse(authToken)
     if (authToken) {
@@ -90,7 +91,8 @@ const verifyToken = async (req, res, next) => {
         if (err) {
             console.log(err);
             return res.status(403).json("Token is not valid!");}
-            console.log(req.user);
+
+            console.log(user);
             req.user = user.user;
             console.log(req.user);
         next();

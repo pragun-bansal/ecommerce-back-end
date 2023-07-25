@@ -58,8 +58,10 @@ const getProductReviews=async(req,res)=>{
 const addReview=async(req,res)=>{
     try{
 
-        const {productId,comment,title,rating} = req.body;
+        let {productId,comment,title,rating} = req.body;
+        if(!rating){rating=5}
         const user = req.user;
+        console.log(user);
         const product =await Product.findOne({_id:productId});
         if(!product){
             return res.status(404).json({
@@ -68,12 +70,13 @@ const addReview=async(req,res)=>{
     
             })
         }
+        const userId =user._id
         const review =await Reviews.create({
             product:product._id,
             title:title,
             comment:comment,
             rating:rating,
-            user:user._id
+            user:userId
         })
     
         product.reviews.push(review._id);
@@ -97,7 +100,7 @@ const addReview=async(req,res)=>{
 const deleteReview=async(req,res)=>{
     try{
         const {productId,reviewId} = req.body;
-    const product =await Product.findOneByid(productId);
+    let product =await Product.findOne({_id:productId});
     if(!product){
         return res.status(404).json({
             success:false,
@@ -106,7 +109,7 @@ const deleteReview=async(req,res)=>{
         })
     }
 
-    product.reviews.filter((p)=> p!=reviewId);
+    product.reviews=product.reviews.filter((p)=> p!=reviewId);
     const deletedR =await Reviews.deleteOne({_id:reviewId});
     const data =await product.save();
     return res.status(200).json({
