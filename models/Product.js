@@ -19,9 +19,11 @@ const productSchema = new mongoose.Schema(
     Stock: { type: Number, required: true, default: 0 }, // count of the product in stock
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref:"Review"
     }],
     offers: [{
         type: mongoose.Schema.Types.ObjectId,
+        ref:"Offer"
     }],
   },
   { timestamps: true }

@@ -28,6 +28,7 @@ const validPassword=async(password, hash)=> {
         password,
         hash
       );
+      // console.log("valid or not",validatePassword)
       return validatePassword;
   }
   catch(err){
@@ -80,7 +81,8 @@ function issueJWT(user) {
 
 
 const verifyToken = async (req, res, next) => {
-    const authToken = req.headers.token;
+  console.log(req.body)
+    const authToken = JSON.parse(req.body.token);
     console.log(req.body);
     // authToken = JSON.parse(authToken)
     if (authToken) {

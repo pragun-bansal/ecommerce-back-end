@@ -5,7 +5,7 @@ const Wishlist = require("../models/Wishlist")
 const getUserWishlist = async(req,res)=>{
     try{
 
-        const wishlist = await Wishlist.findOne({ user: req.user._id });
+        const wishlist = await Wishlist.findOne({ user: req.user._id }).populate("items.productId");
     
         if (!wishlist) {
             const wishlist=await Wishlist.create({

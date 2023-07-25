@@ -48,7 +48,7 @@ const registerUser = async (userBody) => {
   const loginUser = async (email, password) => {
     const user = await User.findOne({email:email});
     if (!user) return null;
-    const isValid = validPassword(password, user.hash);
+    const isValid =await validPassword(password, user.hash);
     if (!isValid) return null;
     const tokenObject = issueJWT(user);
     return tokenObject;

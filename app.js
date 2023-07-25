@@ -6,6 +6,7 @@ const authRoute = require("./Routes/authRoutes");
 const cartRoute = require("./Routes/cartRoutes");
 const reviewRoute = require("./Routes/reviewRoutes");
 const wishlistRoute = require("./Routes/wishlistRoutes");
+const productRoute = require("./Routes/productRoutes");
 const morgan = require("morgan");
 const path = require('path');
 // const routes = require("./routes/ToDoRoute");
@@ -41,6 +42,7 @@ app.use("/auth", authRoute);
 app.use("/cart", cartRoute);
 app.use("/wishlist", wishlistRoute);
 app.use("/reviews", reviewRoute);
+app.use("/product",productRoute)
 // app.use(routes);
 
 app.listen(PORT, () => {
