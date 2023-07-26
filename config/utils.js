@@ -82,7 +82,7 @@ function issueJWT(user) {
 
 const verifyToken = async (req, res, next) => {
   console.log(req.body)
-    const authToken = JSON.parse(req.body.token);
+    const authToken = req.body.token;
     console.log(authToken)
     console.log(req.body);
     // authToken = JSON.parse(authToken)

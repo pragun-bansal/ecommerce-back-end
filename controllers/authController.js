@@ -4,7 +4,60 @@ const UserService = require("../Services/UserService")
 const {
   validateRegisterInput
 } = require("../validation/register");
-const {validateLoginInput} =require("../validation/login")
+const {validateLoginInput} =require("../validation/login");
+const randomstring = require("randomstring");
+const bcrypt = require("bcrypt");
+
+
+const gRegister = async (req, res, next) => {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(randomstring.generate(10), salt);
+  const newUser = new User({
+    name: req.body.name,
+    hash: hashedPassword,
+    email: req.body.email,
+    pfp: req.body.profile,
+  });
+  try {
+    await newUser.save();
+    const token = jwt.sign(
+      {
+        id: newUser._id,
+        isAdmin: newUser.isAdmin,
+      },
+      process.env.JWT_SECRET_KEY
+    );
+    const { password, isAdmin, ...otherDetails } = newUser._doc;
+    res
+      .cookie("access_token", token)
+      .status(200)
+      .json({ details: { ...otherDetails }, isAdmin, token });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const gLogin= async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    const token = jwt.sign(
+      {
+        user:user
+      },
+      process.env.JWT_SECRET_KEY
+    );
+    const { password, isAdmin, ...otherDetails } = user._doc;
+    res
+      .cookie("access_token", token)
+      .status(200)
+      .json({ details: { ...otherDetails }, isAdmin, token });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
 
 
 const CLIENT_URL = `${process.env.FRONT_END_URL}`;
@@ -23,7 +76,7 @@ const login=async (req, res) => {
       const password = req.body.password;
   
       const token = await UserService.loginUser(email, password);
-      
+      console.log(token);
       if (!token) {
         return res
           .status(404)
@@ -98,5 +151,7 @@ const register=async(req,res)=>{
 
 module.exports={
     login,
-    register
+    register,
+    gLogin,
+    gRegister
 }
