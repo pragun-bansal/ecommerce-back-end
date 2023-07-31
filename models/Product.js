@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 
 
+
 const productSchema = new mongoose.Schema(
   {
     // user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //which user creates
@@ -17,6 +18,20 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true, default: 5 }, // rating of the product
     price: { type: Number, required: true, default: 0 }, // price of the product
     Stock: { type: Number, required: true, default: 0 }, // count of the product in stock
+    threads:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Threads"
+    }],
+    sizes:[{
+      size:{
+        type: String,
+        required:true
+      },
+      price:{
+        type:Number,
+        required:true
+      }
+    }],
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Review"
