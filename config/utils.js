@@ -81,10 +81,10 @@ function issueJWT(user) {
 
 
 const verifyToken = async (req, res, next) => {
-  console.log(req.body)
+  console.log(req)
     const authToken = req.body.token;
-    console.log(authToken)
-    console.log(req.body);
+    // console.log(authToken)
+    // console.log(req.body);
     // authToken = JSON.parse(authToken)
     if (authToken) {
       jwt.verify(authToken, process.env.JWT_SECRET_KEY, (err, user) => {
@@ -104,12 +104,6 @@ const verifyToken = async (req, res, next) => {
   
 const verifyUser = async (req, res, next) => {
     verifyToken(req, res, () => {
-      // if (req.user.user._id === req.body.user_id) {
-      //   // console.log("user verified!");
-      //   next();
-      // } else {
-      //   return res.status(403).json("You are not alowed to do that!");
-      // }
 
       next();
     });

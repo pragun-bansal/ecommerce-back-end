@@ -1,7 +1,8 @@
-const User = require("../models/User")
 const express = require("express");
 const router = express.Router();
-
+const {updateProfilePic,upload} = require("../controllers/userController");
+const { verifyUser } = require("../config/utils");
+const User = require("../models/User");
 //get user
 router.get("/find/:email", async (req, res) => {
   try {
@@ -16,5 +17,7 @@ router.get("/find/:email", async (req, res) => {
     res.status(500).json("something went wrong");
   }
 });
+
+router.post("/updateProfilePic", verifyUser, updateProfilePic);
 
 module.exports = router
