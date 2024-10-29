@@ -81,10 +81,10 @@ function issueJWT(user) {
 
 
 const verifyToken = async (req, res, next) => {
-  console.log(req)
+  // console.log(req)
     const authToken = req.body.token;
     // console.log(authToken)
-    // console.log(req.body);
+    // console.log(req.body.token);
     // authToken = JSON.parse(authToken)
     if (authToken) {
       jwt.verify(authToken, process.env.JWT_SECRET_KEY, (err, user) => {
@@ -92,9 +92,9 @@ const verifyToken = async (req, res, next) => {
             console.log(err);
             return res.status(403).json("Token is not valid!");}
 
-            console.log(user);
+            // console.log(user);
             req.user = user.user;
-            console.log(req.user);
+            // console.log(req.user);
         next();
       });
     } else {
