@@ -75,7 +75,7 @@ const createProduct = async (req, res) => {
     try {
         const product = new Product({
             name,
-            category,
+            category: JSON.parse(category).map(cat => cat.toLowerCase()),
             tagline,
             description,
             price,

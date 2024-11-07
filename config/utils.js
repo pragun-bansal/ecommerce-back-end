@@ -101,6 +101,32 @@ const verifyToken = async (req, res, next) => {
       return res.status(401).json("You are not authenticated!");
     }
   };
+
+const verifyTokenAdmin = async (req, res, next) => {
+    // console.log(req)
+    const authToken = req.body.token;
+    console.log(req.body)
+    // console.log(authToken)
+    // console.log(req.body.token);
+    // authToken = JSON.parse(authToken)
+    if (authToken) {
+        jwt.verify(authToken, process.env.JWT_SECRET_KEY, (err, user) => {
+            if (err) {
+                console.log(err);
+                return res.status(403).json("Token is not valid!");}
+
+            // console.log(user);
+            req.user = user.user;
+            // console.log(req.user);
+            if(!user.user.admin){
+                return res.status(404).json("You are not authorized to access this page");
+            }
+            next();
+        });
+    } else {
+        return res.status(401).json("You are not authenticated!");
+    }
+};
   
 const verifyUser = async (req, res, next) => {
     verifyToken(req, res, () => {
@@ -109,6 +135,14 @@ const verifyUser = async (req, res, next) => {
     });
   };
 
+const verifyAdmin = async (req, res, next) => {
+    verifyTokenAdmin(req, res, () => {
+
+        next();
+    });
+};
+
+
 // Export the functions and middlewares correctly
 module.exports = {
   validPassword,
@@ -116,4 +150,6 @@ module.exports = {
   issueJWT,
   verifyToken,
   verifyUser,
+    verifyAdmin,
+    verifyTokenAdmin
 };

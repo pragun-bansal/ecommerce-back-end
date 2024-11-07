@@ -13,7 +13,7 @@ const gRegister = async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(randomstring.generate(10), salt);
   const newUser = new User({
-    name: req.body.name,
+    name: req.body.name.toLowerCase(),
     hash: hashedPassword,
     email: req.body.email,
     pfp: req.body.profile,

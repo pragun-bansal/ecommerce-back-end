@@ -13,10 +13,6 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true, default: 5 }, // rating of the product
     price: { type: Number, required: true, default: 0 }, // price of the product
     stock: { type: Number, required: true, default: 0 }, // count of the product in stock
-    threads:[{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"Threads"
-    }],
     sizes:[{
       size:{
         type: String,

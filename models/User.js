@@ -67,6 +67,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: "https://i.ibb.co/LNchwvr/5794329.jpg"
     },
+    admin:{
+        type:Boolean,
+        default:false
+    },
     hash: {
         type: String,
         required: true,
