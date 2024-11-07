@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        require: true,
+        // require: true,
         unique: true
     },
     email: {
@@ -64,7 +64,7 @@ const UserSchema = new mongoose.Schema({
     },
     pfp: {
         type: String,
-        required: true,
+        // required: true,
         default: "https://i.ibb.co/LNchwvr/5794329.jpg"
     },
     admin:{
@@ -73,34 +73,34 @@ const UserSchema = new mongoose.Schema({
     },
     hash: {
         type: String,
-        required: true,
+        // required: true,
     },
     addressLine1: {
         type: String,
-        required: true
+        // required: true
     },
     addressLine2: {
         type: String
     },
     town: {
         type: String,
-        required: true
+        // required: true
     },
     city: {
         type: String,
-        required: true
+        // required: true
     },
     pinCode: {
         type: String,
-        required: true
+        // required: true
     },
     phoneNumber: {
         type: String,
-        required: true
+        // required: true
     },
     gender: {
         type: String,
-        required: true,
+        // required: true,
         enum: ["male", "female", "other"]
     },
     cart: {
